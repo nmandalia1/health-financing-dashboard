@@ -1,0 +1,44 @@
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ── Pipeline data ─────────────────────────────────────────────────────────
+# ~220MB of raw pulls and derived Parquet. These are build outputs: the
+# pipeline regenerates them, and the dashboard reads the published copies from
+# R2. Committing them would grow history by ~21MB on every refresh.
+data/raw/
+data/processed/
+data/manual_downloads/
+data/research/
+logs/
+
+# ── Dashboard ─────────────────────────────────────────────────────────────
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+dashboard/.vercel/
+dashboard/*.tsbuildinfo
+
+# The Parquet copies the dashboard serves locally. Ignored because production
+# reads them from R2 via NEXT_PUBLIC_DATA_BASE_URL — if you would rather ship
+# data inside the deploy instead, un-ignore this and skip the env var.
+dashboard/public/data/
+
+# ── Environment ───────────────────────────────────────────────────────────
+.env
+.env.local
+.env*.local
+
+# ── OS ────────────────────────────────────────────────────────────────────
+.DS_Store
+
+# ── Local agent/editor config ─────────────────────────────────────────────
+# Machine-local: settings.local.json embeds absolute home-directory paths, and
+# launch.json hardcodes this machine's npm location. Neither is useful to a
+# collaborator and both leak local structure in a public repo.
+.claude/

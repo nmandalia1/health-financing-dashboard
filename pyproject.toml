@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "health-financing-dashboard"
+version = "0.1.0"
+description = "Data pipeline and dashboard for global health financing analysis"
+requires-python = ">=3.9"
+dependencies = [
+    "wbgapi>=1.0.12",
+    "pandas>=2.0.0",
+    "requests>=2.31.0",
+    "pyarrow>=14.0.0",
+    "openpyxl>=3.1.0",
+    "tqdm>=4.66.0",
+    "pycountry>=23.12.0",
+    "urllib3>=2.0.0",
+]
+
+[project.optional-dependencies]
+notebook = [
+    "jupyter>=1.0.0",
+    "notebook>=7.0.0",
+    "ipywidgets>=8.0.0",
+    "plotly>=5.18.0",
+]
+downloaders = [
+    "playwright>=1.40.0",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "requests-mock>=1.11",
+    "ruff>=0.4",
+]
+
+# ── pytest ─────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+addopts      = "-v --tb=short -q"
+# Ignore the requests-mock deprecation warning
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+# ── ruff (replaces flake8 + isort + pyupgrade) ───────────────────────────────���
+[tool.ruff]
+line-length    = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "RUF", # ruff-specific
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "B008",  # do not perform function calls in default arguments
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pipeline"]
+
+# ── coverage ──────────────────────────────────────────────────────────────────
+[tool.coverage.run]
+source   = ["pipeline"]
+omit     = ["pipeline/downloaders/*", "pipeline_gui.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under   = 60

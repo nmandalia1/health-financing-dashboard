@@ -1,0 +1,62 @@
+name: Refresh dashboard data
+
+# The dashboard reads Parquet over HTTP at runtime, so a data refresh is an
+# upload — the site is not rebuilt and not redeployed, and the ~21MB
+# master.parquet never enters git history.
+on:
+  schedule:
+    # 03:00 UTC on the 1st of each month. Source agencies publish on their own
+    # cadence, so monthly is about right; use the manual trigger for a mid-cycle
+    # refresh when WHO GHED or the IMF WEO lands an update.
+    - cron: "0 3 1 * *"
+  workflow_dispatch:
+
+# A pipeline run and an upload should never overlap with another.
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # The pipeline pulls from WHO, World Bank and IMF APIs with retry/backoff;
+    # a slow upstream should not fail the run, but it should not hang forever.
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install pipeline dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        run: python run_pipeline.py
+
+      - name: Check outputs exist
+        run: |
+          test -f data/processed/master.parquet
+          test -f data/processed/country_metadata.parquet
+          ls -lh data/processed/*.parquet
+
+      - name: Publish to R2
+        env:
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: ./dashboard/scripts/publish-data.sh
+
+      - name: Keep the run log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-logs
+          path: logs/
+          retention-days: 30
+          if-no-files-found: ignore

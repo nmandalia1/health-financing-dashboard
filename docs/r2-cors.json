@@ -1,0 +1,12 @@
+[
+  {
+    "AllowedOrigins": [
+      "https://REPLACE-WITH-YOUR-VERCEL-DOMAIN.vercel.app",
+      "http://localhost:3000"
+    ],
+    "AllowedMethods": ["GET", "HEAD"],
+    "AllowedHeaders": ["range", "content-type"],
+    "ExposeHeaders": ["content-length", "content-range", "accept-ranges"],
+    "MaxAgeSeconds": 3600
+  }
+]
