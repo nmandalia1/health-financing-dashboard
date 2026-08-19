@@ -12,18 +12,25 @@ workflow + publish script all committed. What follows needs your accounts.
    git push -u origin main
    ```
 
-## B. Cloudflare R2
+## B. Cloudflare R2 — DONE
 
-1. R2 → Create bucket (e.g. `health-financing-data`).
-2. Settings → **Public access** → enable. Note the public URL
-   (`https://pub-<hash>.r2.dev` unless you attach a custom domain).
-3. Settings → **CORS policy** → paste `docs/r2-cors.json`, replacing the Vercel
-   domain. Without this the browser blocks the Parquet reads and every page
-   loads forever.
-4. **Manage API tokens** → Create token, Object Read & Write, scoped to this
-   bucket. Copy the Access Key ID and Secret Access Key — shown once.
-5. Note the S3 endpoint: `https://<account-id>.r2.cloudflarestorage.com`
-   (different from the public URL in step 2).
+Bucket, public access and CORS were created with wrangler. Live values:
+
+| | |
+|---|---|
+| Bucket | `health-financing-data` |
+| Public URL | `https://pub-1e42425823a040eea615cddd428dc856.r2.dev` |
+| S3 endpoint | `https://5b136f9255dec6ad5e1e68868abdbf28.r2.cloudflarestorage.com` |
+| CORS | `*` origins, GET/HEAD, range header exposed |
+
+CORS allows all origins deliberately: the bucket is already public, so scoping
+origins would not restrict access to the data — it would only break the site if
+the deploy domain changed. Re-apply with `wrangler r2 bucket cors set
+health-financing-data --file docs/r2-cors.json` if you ever narrow it.
+
+Still yours to do: **R2 → Manage API tokens → Create token**, Object Read &
+Write scoped to this bucket. The Access Key ID and Secret Access Key are shown
+once. There is no wrangler command for this.
 
 ## C. GitHub secrets
 
