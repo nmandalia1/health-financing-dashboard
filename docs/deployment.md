@@ -77,9 +77,17 @@ change only when the dependency is upgraded.
 
 ## Refreshing the data
 
-Automatic: `.github/workflows/refresh-data.yml` runs on the 1st of each month and on
-manual trigger. It runs the pipeline and uploads to R2. **The site is not redeployed** —
-visitors pick up new figures within the 5-minute cache window.
+`.github/workflows/refresh-data.yml` runs the pipeline and uploads to R2. **The site is
+not redeployed** — visitors pick up new figures within the 5-minute cache window.
+
+**The monthly schedule is currently disabled — the workflow is manual-trigger only**
+(Actions → "Refresh dashboard data" → Run workflow). It rebuilds from the default branch
+and publishes straight to R2, so an unattended run replaces live data with whatever the
+pipeline produces that day. It is off until the publish path has had a few supervised
+runs; the commented-out `schedule:` block in the workflow explains how to restore it.
+
+Note that a manual run still rebuilds from the **default branch**, not your working tree.
+To publish local pipeline output instead, use `dashboard/scripts/publish-data.sh`.
 
 Required repository secrets:
 
