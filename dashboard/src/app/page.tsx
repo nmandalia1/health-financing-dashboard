@@ -48,19 +48,21 @@ export default function Home() {
               endorsement; they are now stated as provenance below. */}
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-govt" />
-            217 countries · 2000–2023
+            217 countries · 2000–2024
           </div>
           <h1 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
-            Where health money comes from — and what it buys
+            Who pays for health — and who is protected
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
-            Compare countries on health spending, financial protection and
-            coverage — then open any country for its full financing profile.
+            Revenue sources, out-of-pocket burden and service coverage across
+            217 countries — then open any country for its fiscal space, budget
+            execution and disease-programme financing.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-xs leading-relaxed text-muted-foreground/70">
             Built on published data from the WHO Global Health Expenditure
-            Database, the World Bank and the IMF. An independent project — not
-            affiliated with, or endorsed by, those organisations.{" "}
+            Database, WHO GHO, the World Bank and the IMF. Expenditure follows
+            the SHA 2011 boundary. An independent project — not affiliated with,
+            or endorsed by, those organisations.{" "}
             <Link href="/about" className="underline underline-offset-2 hover:text-foreground">
               Sources and methods
             </Link>
