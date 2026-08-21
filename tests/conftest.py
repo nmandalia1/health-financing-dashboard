@@ -85,7 +85,13 @@ def gho_page_response() -> dict:
 
 @pytest.fixture
 def gho_paginated_responses() -> list[dict]:
-    """Simulated two-page GHO API response (tests nextLink pagination)."""
+    """
+    Simulated two-page GHO response.
+
+    GHO caps a response at 1000 rows and emits NO @odata.nextLink, so the
+    fetcher pages with $skip. A full page means "there may be more"; a short
+    page terminates the loop.
+    """
     page1_values = [
         {"SpatialDim": f"C{i:02d}", "TimeDim": 2020, "NumericValue": float(i),
          "Value": str(i), "Dim1": "BTSX", "Dim2": None}
@@ -95,10 +101,4 @@ def gho_paginated_responses() -> list[dict]:
         {"SpatialDim": "KEN", "TimeDim": 2020, "NumericValue": 42.0,
          "Value": "42.0", "Dim1": "BTSX", "Dim2": None}
     ]
-    return [
-        {
-            "value": page1_values,
-            "@odata.nextLink": "https://ghoapi.azureedge.net/api/TEST_IND?$skiptoken=1000",
-        },
-        {"value": page2_values},
-    ]
+    return [{"value": page1_values}, {"value": page2_values}]

@@ -25,10 +25,10 @@ const UHC_RADAR_CODES = [
 ];
 
 export const OUTCOME_OPTIONS = [
-  { code: "WHOSIS_000001", label: "Life expectancy at birth", inverted: false },
+  { code: "SP.DYN.LE00.IN", label: "Life expectancy at birth", inverted: false },
   { code: "WHOSIS_000015", label: "Healthy life expectancy (HALE)", inverted: false },
-  { code: "MDG_0000000001", label: "Under-5 mortality rate", inverted: true },
-  { code: "MDG_0000000026", label: "Neonatal mortality rate", inverted: true },
+  { code: "SH.DYN.MORT", label: "Under-5 mortality rate", inverted: true },
+  { code: "SH.DYN.NMRT", label: "Neonatal mortality rate", inverted: true },
   { code: "SH.STA.MMRT", label: "Maternal mortality ratio", inverted: true },
   { code: "UHC_INDEX_REPORTED", label: "UHC Service Coverage Index", inverted: false },
 ] as const;

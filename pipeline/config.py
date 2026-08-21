@@ -138,8 +138,8 @@ WHO_GHO_INDICATORS = {
     # === MORTALITY & LIFE EXPECTANCY ===
     "WHOSIS_000001":                "Life expectancy at birth (years)",
     "WHOSIS_000015":                "Healthy life expectancy (HALE) at birth",
-    "MDG_0000000001":               "Under-5 mortality rate (per 1,000 live births)",
-    "MDG_0000000026":               "Neonatal mortality rate (per 1,000 live births)",
+    "MDG_0000000007":               "Under-5 mortality rate (per 1,000 live births)",
+    "WHOSIS_000003":                "Neonatal mortality rate (per 1,000 live births)",
     "MORT_MATERNALNUM":             "Maternal deaths (number)",
 
     # === NON-COMMUNICABLE DISEASES ===
@@ -161,15 +161,24 @@ WHO_GHO_INDICATORS = {
     "HWF_0004":                     "Dentists (per 10,000 population)",
 
     # === MATERNAL & REPRODUCTIVE ===
-    "WHS4_100":                     "Antenatal care coverage (at least 1 visit, %)",
+    # WHS4_100 / WHS4_543 / WHS4_544 used to sit here labelled as ANC1, SBA and
+    # ANC4. They are not: GHO publishes them as DTP3, BCG and IPV immunisation
+    # coverage (verified against /api/Indicator — values match WUENIC exactly).
+    # Immunisation coverage comes from WUENIC_INDICATORS, so they are dropped.
+    #
+    # ANC1 is thin in GHO: the legacy WHS4_111 series stops in 2014, so we take
+    # WHO's current code. Coverage is still sparse (~110 countries, 2014-),
+    # which the chart's data-coverage strip surfaces.
+    "ANC_ATLEAST1VISIT_PERCENT":    "Antenatal care coverage (at least 1 visit, %)",
     "WHS4_154":                     "Antenatal care coverage (≥4 visits, %)",
-    "WHS4_544":                     "Polio (Pol3) immunisation coverage among 1-year-olds (%)",
     "MDG_0000000025":               "Births attended by skilled health personnel (%)",
-    "WHS4_543":                     "Births attended by skilled health personnel (%, alt series)",
     "FP_CXALLFP":                   "Contraceptive prevalence rate (%)",
 
     # === HIV / AIDS ===
-    "MDG_0000000020":               "HIV incidence rate (per 1,000 uninfected)",
+    # MDG_0000000020 used to sit here labelled "HIV incidence rate". GHO
+    # publishes it as tuberculosis incidence per 100,000 (values match
+    # SH.TBS.INCD exactly), so it is dropped — HIV epidemiology comes from
+    # UNAIDS, and TB incidence from the World Bank series.
     "HIV_0000000006":               "HIV-related deaths (number)",
 
     # === TUBERCULOSIS ===
@@ -187,21 +196,11 @@ WHO_GHO_INDICATORS = {
     # only a subset of WUENIC antigens; the canonical WUENIC workbook covers
     # 16 antigens back to 1997.
 
-    # === HEALTH FINANCING (GHED via GHO — replaces manual Excel download) ===
-    "GHED_CHE_pc_US_SHA2011":       "Current health expenditure per capita (USD)",
-    "GHED_CHEGDP_SHA2011":          "Current health expenditure (% of GDP)",
-    "GHED_GGHE-D_pc_US_SHA2011":    "Domestic govt health expenditure per capita (USD)",
-    "GHED_GGHE-DGDP_SHA2011":       "Domestic govt health expenditure (% of GDP)",
-    "GHED_GGHE-DCHE_SHA2011":       "Domestic govt health expenditure (% of CHE)",
-    "GHED_GGHE-DGGE_SHA2011":       "Domestic govt health expenditure (% of GGE)",
-    "GHED_OOP_pc_US_SHA2011":       "Out-of-pocket expenditure per capita (USD)",
-    "GHED_OOPSCHE_SHA2011":         "Out-of-pocket expenditure (% of CHE)",
-    "GHED_EXT_pc_US_SHA2011":       "External health expenditure per capita (USD)",
-    "GHED_EXTCHE_SHA2011":          "External health expenditure (% of CHE)",
-    "GHED_PVT-D_pc_US_SHA2011":     "Domestic private health expenditure per capita (USD)",
-    "GHED_PVT-DCHE_SHA2011":        "Domestic private health expenditure (% of CHE)",
-    "GHED_PHC_pc_US_SHA2011":       "Primary health care expenditure per capita (USD)",
-    "GHED_PHC_GGHE-D_PHC_SHA2011":  "Govt PHC expenditure (% of PHC expenditure)",
+    # === HEALTH FINANCING ===
+    # Removed — the GHED_*_SHA2011 series GHO republishes are the same numbers
+    # ghed.py reads from the GHED workbook (identical to 1e-14), but GHO carries
+    # only the SHA2011 headline subset and stops a year earlier. Health
+    # financing comes from ghed.py (see GHED_* codes in ghed.parquet).
 }
 
 # ─────────────────────────────────────────────

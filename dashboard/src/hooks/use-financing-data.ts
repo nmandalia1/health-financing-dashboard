@@ -8,8 +8,10 @@ import type { IndicatorGroup } from "@/lib/types";
 /**
  * All indicator codes needed for View 5.1: Financing Landscape.
  *
- * Uses the dense lowercase GHED codes (4,588 country-years each, 195 countries)
- * rather than the sparse SHA2011 WHO-GHO mirror codes (1,000 rows each).
+ * Uses the lowercase GHED codes from the GHED workbook (~4,600 country-years
+ * each, 195 countries). The SHA2011 WHO-GHO mirror codes this page used to
+ * warn about are gone: they were the same numbers truncated to 1,000 rows, and
+ * the whole dashboard now reads these codes.
  */
 const FINANCING_INDICATORS = [
   // Core SHA 2011 revenue-source decomposition (sums to 100% of CHE)

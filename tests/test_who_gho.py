@@ -3,7 +3,7 @@ test_who_gho.py — Unit tests for pipeline/who_gho.py.
 
 Uses requests_mock to avoid real HTTP calls.
 Key scenarios tested:
-  - Pagination via @odata.nextLink
+  - $skip pagination (GHO caps responses at 1000 rows, no nextLink)
   - Deduplication of sex-disaggregated rows (_pick_best_value)
   - 404 → log_skip, no crash
   - Cache hit skips HTTP fetch
@@ -39,22 +39,39 @@ class TestFetchGhoIndicator:
         assert len(records) == 2
         assert records[0]["SpatialDim"] == "KEN"
 
-    def test_follows_next_link_pagination(self, requests_mock, gho_paginated_responses):
+    def test_pages_with_skip_until_short_page(self, requests_mock, gho_paginated_responses):
         """
-        Critical regression test — the old code used $top=10000 and never
-        followed @odata.nextLink, silently returning only 1000 rows.
+        Critical regression test. GHO caps a response at 1000 rows and returns
+        NO @odata.nextLink, so the previous nextLink-driven loop exited after
+        one request and silently truncated every larger indicator — 33 of the
+        45 indicators we pull came back at exactly 1000 rows.
         """
         requests_mock.get(
             "https://ghoapi.azureedge.net/api/TEST_IND",
-            json=gho_paginated_responses[0],
-        )
-        requests_mock.get(
-            "https://ghoapi.azureedge.net/api/TEST_IND?$skiptoken=1000",
-            json=gho_paginated_responses[1],
+            [{"json": gho_paginated_responses[0]}, {"json": gho_paginated_responses[1]}],
         )
         records = _fetch_gho_indicator("TEST_IND", 2000, 2023)
-        # 1000 from page 1 + 1 from page 2
+        # 1000 from page 1 + 1 from page 2, then the short page stops the loop.
         assert len(records) == 1001
+        assert requests_mock.call_count == 2
+        # Pages must be requested with an increasing $skip and a pinned
+        # $orderby — paging an unordered result set can repeat or drop rows.
+        skips = [r.qs["$skip"][0] for r in requests_mock.request_history]
+        assert skips == ["0", "1000"]
+        assert all(r.qs["$orderby"] == ["spatialdim,timedim"]
+                   for r in requests_mock.request_history)
+
+    def test_stops_on_short_first_page(self, requests_mock):
+        """A page shorter than the cap means the series is complete — one call."""
+        requests_mock.get(
+            "https://ghoapi.azureedge.net/api/TEST_IND",
+            json={"value": [
+                {"SpatialDim": "KEN", "TimeDim": 2020, "NumericValue": 5.1,
+                 "Value": "5.1", "Dim1": "BTSX", "Dim2": None},
+            ]},
+        )
+        assert len(_fetch_gho_indicator("TEST_IND", 2000, 2023)) == 1
+        assert requests_mock.call_count == 1
 
     def test_raises_on_http_error(self, requests_mock):
         requests_mock.get(

@@ -6,15 +6,15 @@ import { getMultipleIndicators } from "@/lib/queries";
 import type { IndicatorGroup } from "@/lib/types";
 
 const DISEASE_INDICATORS = [
-  // HIV / AIDS — existing sources
-  "MDG_0000000020",   // HIV incidence (per 1,000 uninfected) — WHO GHO
-  "SH.DYN.AIDS.ZS",   // HIV prevalence, ages 15–49 (%) — World Bank
+  // HIV / AIDS — fallbacks used only where UNAIDS has no data for a country
   "SH.HIV.ARTC.ZS",   // ART coverage (%) — World Bank
   "HIV_0000000006",   // HIV-related deaths (number) — WHO GHO
-  // HIV / AIDS — UNAIDS AIDSinfo
+  // HIV / AIDS — UNAIDS AIDSinfo (primary source)
   "UNAIDS_PLHIV",             // People living with HIV (number)
   "UNAIDS_NEW_INFECTIONS",    // New HIV infections (number)
   "UNAIDS_AIDS_DEATHS",       // AIDS-related deaths (number)
+  "UNAIDS_PREVALENCE_ADULTS", // HIV prevalence, adults 15–49 (%)
+  "UNAIDS_INCIDENCE_RATE",    // HIV incidence (per 1,000 uninfected)
   "UNAIDS_95_DIAGNOSED",      // PLHIV who know their status (%)
   "UNAIDS_95_ON_ART",         // Diagnosed PLHIV on ART (%)
   "UNAIDS_95_SUPPRESSED",     // PLHIV on ART with viral suppression (%)
@@ -44,7 +44,7 @@ const DISEASE_INDICATORS = [
   "SA_0000001688",           // Alcohol use disorders (15+, %)
   "MH_12",                   // Mental health outpatient rate (per 100,000)
   // Cross-cutting: external financing
-  "GHED_EXTCHE_SHA2011",
+  "GHED_ext_che",
 ];
 
 export function useDiseaseData(iso3: string) {

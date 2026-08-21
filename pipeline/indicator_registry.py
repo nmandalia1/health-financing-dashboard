@@ -99,6 +99,15 @@ def _ind(code: str, label: str, domain: str, source: str, unit: str,
 
 
 # ── The registry ───────────────────────────────────────────────────────────
+#
+# One code per concept. Where two sources publish the same measure, only the
+# canonical one is registered — a second entry would render a duplicate card
+# and chart on the pillar page AND be averaged into the pillar sub-index twice.
+# Deliberately excluded on those grounds:
+#   SH.XPD.EHEX.CH.ZS  — the World Bank's redistribution of GHED_ext_che
+#                        (identical to 1e-14 across 3,979 country-years; GHED
+#                        also runs a year later and covers 2 more countries).
+#   NY.GDP.PCAP.CD     — duplicates NGDPDPC (IMF WEO), r = 0.999.
 _REGISTRY: list[Indicator] = [
     # ----- Pillar 1 · Macroeconomic & fiscal envelope -----------------------
     _ind("NGDP_RPCH", "Real GDP growth", "macro", "IMF WEO", "%", HIGHER_BETTER,
@@ -118,9 +127,6 @@ _REGISTRY: list[Indicator] = [
          "High or volatile inflation reduces the purchasing power of health budgets and households. "
          "The 10% line is a warning reference, not a hard threshold.",
          also=("efficiency",), benchmarks={"heuristic_caution": 10.0}),
-    _ind("NY.GDP.PCAP.CD", "GDP per capita (WB, current US$)", "macro", "World Bank", "US$", HIGHER_BETTER,
-         "Context / peer-grouping variable only — basis for World Bank income grouping. Not scored into the index.",
-         normalization="none"),
 
     # ----- Pillar 2 · Domestic revenue mobilisation -------------------------
     _ind("GC.REV.XGRT.GD.ZS", "Government revenue (excl. grants)", "revenue", "World Bank", "% GDP",
@@ -169,9 +175,6 @@ _REGISTRY: list[Indicator] = [
          "transition risk if aid declines. The ~20% watch line is a heuristic from the transition "
          "literature (Gavi/Global Fund eligibility & co-financing), not a formal global standard.",
          benchmarks={"heuristic_transition_watch": 20.0}, url="https://apps.who.int/nha/database"),
-    _ind("SH.XPD.EHEX.CH.ZS", "External health expenditure (% of CHE, WB)", "external", "World Bank",
-         "% CHE", LOWER_BETTER,
-         "World Bank cross-check on donor dependency."),
     _ind("DT.ODA.ALLD.CD", "Net ODA received", "external", "World Bank", "US$", NEUTRAL,
          "Context only — absolute ODA in US$ is not comparable across economies of different size and is "
          "directionally ambiguous (more aid ≠ more or less fiscal space), so it is not scored into the index.",
