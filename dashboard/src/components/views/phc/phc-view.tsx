@@ -82,9 +82,9 @@ export function PhcView({ iso3 }: { iso3: string }) {
   const dentists = f("HWF_0004");
   const pharmacists = f("HWF_0006");
   const beds = f("SH.MED.BEDS.ZS");
-  const sba = f("WHS4_543");
-  const anc1 = f("WHS4_100");
-  const anc4 = f("WHS4_544");
+  const sba = f("MDG_0000000025");
+  const anc1 = f("ANC_ATLEAST1VISIT_PERCENT");
+  const anc4 = f("WHS4_154");
 
   // KPI values
   const latestPhcPC = getLatest(phcPC);

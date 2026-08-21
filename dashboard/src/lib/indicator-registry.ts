@@ -101,23 +101,6 @@ export const INDICATOR_REGISTRY: Record<string, Indicator> = {
     "available": true,
     "fallback_code": null
   },
-  "NY.GDP.PCAP.CD": {
-    "code": "NY.GDP.PCAP.CD",
-    "label": "GDP per capita (WB, current US$)",
-    "domain": "macro",
-    "source": "World Bank",
-    "unit": "US$",
-    "direction": 1,
-    "interpretation": "Context / peer-grouping variable only \u2014 basis for World Bank income grouping. Not scored into the index.",
-    "pillars": [
-      "macro"
-    ],
-    "benchmarks": {},
-    "normalization": "none",
-    "reference_url": "",
-    "available": true,
-    "fallback_code": null
-  },
   "GC.REV.XGRT.GD.ZS": {
     "code": "GC.REV.XGRT.GD.ZS",
     "label": "Government revenue (excl. grants)",
@@ -266,23 +249,6 @@ export const INDICATOR_REGISTRY: Record<string, Indicator> = {
     },
     "normalization": "peer_minmax",
     "reference_url": "https://apps.who.int/nha/database",
-    "available": true,
-    "fallback_code": null
-  },
-  "SH.XPD.EHEX.CH.ZS": {
-    "code": "SH.XPD.EHEX.CH.ZS",
-    "label": "External health expenditure (% of CHE, WB)",
-    "domain": "external",
-    "source": "World Bank",
-    "unit": "% CHE",
-    "direction": -1,
-    "interpretation": "World Bank cross-check on donor dependency.",
-    "pillars": [
-      "external"
-    ],
-    "benchmarks": {},
-    "normalization": "peer_minmax",
-    "reference_url": "",
     "available": true,
     "fallback_code": null
   },

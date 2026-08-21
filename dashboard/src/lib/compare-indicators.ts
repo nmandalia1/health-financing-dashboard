@@ -19,33 +19,33 @@ export const COMPARE_INDICATOR_GROUPS: CompareIndicatorGroup[] = [
     label: "Financing",
     items: [
       {
-        code: "GHED_CHEGDP_SHA2011",
+        code: "GHED_che_gdp",
         label: "Health spending (% of GDP)",
         unit: "%",
         hoverValue: "%{y:.2f}%",
       },
       {
-        code: "GHED_CHE_pc_US_SHA2011",
+        code: "GHED_che_pc_usd",
         label: "Health spending per capita (USD)",
         unit: " USD",
         hoverValue: "$%{y:,.0f}",
       },
       {
-        code: "GHED_GGHE-DGGE_SHA2011",
+        code: "GHED_gghed_gge",
         label: "Government health spending (% of government spending)",
         unit: "%",
         hoverValue: "%{y:.1f}%",
         benchmark: { value: 15, label: "Abuja 15%" },
       },
       {
-        code: "GHED_OOPSCHE_SHA2011",
+        code: "GHED_oops_che",
         label: "Out-of-pocket share of health spending",
         unit: "%",
         hoverValue: "%{y:.1f}%",
         benchmark: { value: 20, label: "WHO < 20% threshold" },
       },
       {
-        code: "GHED_EXTCHE_SHA2011",
+        code: "GHED_ext_che",
         label: "External share of health spending",
         unit: "%",
         hoverValue: "%{y:.1f}%",
@@ -56,7 +56,7 @@ export const COMPARE_INDICATOR_GROUPS: CompareIndicatorGroup[] = [
     label: "Outcomes",
     items: [
       {
-        code: "WHOSIS_000001",
+        code: "SP.DYN.LE00.IN",
         label: "Life expectancy at birth (years)",
         unit: " yrs",
         hoverValue: "%{y:.1f} yrs",
@@ -69,7 +69,7 @@ export const COMPARE_INDICATOR_GROUPS: CompareIndicatorGroup[] = [
         benchmark: { value: 80, label: "WHO high-coverage reference (80)" },
       },
       {
-        code: "MDG_0000000001",
+        code: "SH.DYN.MORT",
         label: "Under-5 mortality (per 1,000 live births)",
         unit: "",
         hoverValue: "%{y:.1f} / 1k",

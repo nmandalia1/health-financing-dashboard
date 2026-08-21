@@ -35,6 +35,15 @@ logger = logging.getLogger(__name__)
 
 GHO_BASE_URL    = "https://ghoapi.azureedge.net/api"
 REQUEST_TIMEOUT = 30
+
+# The GHO OData endpoint serves at most 1000 rows per request and returns no
+# @odata.nextLink, so pagination has to be driven by $skip (see
+# _fetch_gho_indicator). The page ceiling is a runaway guard only — it must
+# clear the largest series we pull. Sex-disaggregated indicators are the driver:
+# MDG_0000000007 (under-5 mortality) returns ~29k rows across BTSX/MLE/FMLE
+# before _pick_best_value narrows them to one row per country-year.
+GHO_PAGE_SIZE = 1000
+GHO_MAX_PAGES = 60
 CACHE_MAX_AGE_DAYS = 30
 # Max concurrent indicator fetches — stay polite to the WHO API
 MAX_WORKERS = 5
@@ -89,7 +98,12 @@ def _fetch_gho_indicator(
 ) -> list[dict]:
     """
     Fetch all country-level records for a single GHO indicator.
-    Follows @odata.nextLink pagination (GHO API max page size is 1000).
+
+    The GHO OData endpoint caps a response at ``GHO_PAGE_SIZE`` rows and does
+    NOT emit an ``@odata.nextLink``, so a single request silently truncates any
+    indicator with more rows than the cap. We page explicitly with ``$skip``
+    and pin ``$orderby`` so the server's row order is stable across pages —
+    without it, paging an unordered result set can repeat or drop records.
     """
     s = session or _SESSION
     odata_filter = (
@@ -99,21 +113,31 @@ def _fetch_gho_indicator(
         f"and TimeDim le {end_year}"
     )
 
-    url: str | None = f"{GHO_BASE_URL}/{code}"
-    params: dict | None = {
-        "$filter": odata_filter,
-        "$select": "SpatialDim,TimeDim,NumericValue,Value,Dim1,Dim2",
-        "$top": 1000,
-    }
-
+    url = f"{GHO_BASE_URL}/{code}"
     all_records: list[dict] = []
-    while url:
-        response = s.get(url, params=params, timeout=REQUEST_TIMEOUT)
+
+    for page in range(GHO_MAX_PAGES):
+        response = s.get(
+            url,
+            params={
+                "$filter": odata_filter,
+                "$select": "SpatialDim,TimeDim,NumericValue,Value,Dim1,Dim2",
+                "$orderby": "SpatialDim,TimeDim",
+                "$top": GHO_PAGE_SIZE,
+                "$skip": page * GHO_PAGE_SIZE,
+            },
+            timeout=REQUEST_TIMEOUT,
+        )
         response.raise_for_status()
-        data = response.json()
-        all_records.extend(data.get("value", []))
-        url    = data.get("@odata.nextLink")
-        params = None  # params are embedded in nextLink
+        batch = response.json().get("value", [])
+        all_records.extend(batch)
+        if len(batch) < GHO_PAGE_SIZE:
+            break
+    else:
+        logger.warning(
+            "WHO GHO %s hit the %d-page ceiling (%d rows) — results may be truncated.",
+            code, GHO_MAX_PAGES, len(all_records),
+        )
 
     return all_records
 

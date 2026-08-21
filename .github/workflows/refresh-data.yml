@@ -4,11 +4,20 @@ name: Refresh dashboard data
 # upload — the site is not rebuilt and not redeployed, and the ~21MB
 # master.parquet never enters git history.
 on:
-  schedule:
-    # 03:00 UTC on the 1st of each month. Source agencies publish on their own
-    # cadence, so monthly is about right; use the manual trigger for a mid-cycle
-    # refresh when WHO GHED or the IMF WEO lands an update.
-    - cron: "0 3 1 * *"
+  # Automatic refresh is DISABLED — manual trigger only.
+  #
+  # This job rebuilds from whatever is on the default branch and uploads the
+  # result straight to R2, so an unattended run silently replaces live data.
+  # It is off until we are confident the pipeline is producing what we expect:
+  # a truncating-pagination bug in who_gho.py had been quietly capping 33 of
+  # 45 WHO GHO indicators at 1000 rows, and several GHO codes turned out to
+  # carry data that did not match their labels. Both are fixed, but the
+  # publish path deserves a few supervised runs before it runs itself again.
+  #
+  # To re-enable, restore the schedule below. Source agencies publish on their
+  # own cadence, so monthly was about right:
+  #   schedule:
+  #     - cron: "0 3 1 * *"   # 03:00 UTC on the 1st
   workflow_dispatch:
 
 # A pipeline run and an upload should never overlap with another.

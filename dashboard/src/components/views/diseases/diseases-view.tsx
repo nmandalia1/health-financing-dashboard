@@ -59,7 +59,7 @@ export function DiseasesView({
   }
 
   const f = (key: string) => filterByYears(data[key] || [], startYear, endYear);
-  const external = f("GHED_EXTCHE_SHA2011");
+  const external = f("GHED_ext_che");
 
   return (
     <div className="space-y-6">
@@ -116,14 +116,15 @@ function HivPanel({
   const finGlobalFund    = f("UNAIDS_FIN_GLOBAL_FUND");
   const finPepfar        = f("UNAIDS_FIN_PEPFAR");
 
-  // Fallback to WHO GHO / World Bank only if UNAIDS has no data for this country
-  const incidenceFallback = f("MDG_0000000020");
-  const artFallback       = f("SH.HIV.ARTC.ZS");
-  const deathsFallback    = f("HIV_0000000006");
+  // Fallback to WHO GHO / World Bank only if UNAIDS has no data for this country.
+  // There is no incidence fallback: the GHO code that used to sit here
+  // (MDG_0000000020) publishes tuberculosis incidence, not HIV incidence.
+  const artFallback    = f("SH.HIV.ARTC.ZS");
+  const deathsFallback = f("HIV_0000000006");
 
-  const incidence = incidenceRate.length > 0 ? incidenceRate : incidenceFallback;
-  const art       = artCoverage.length > 0   ? artCoverage   : artFallback;
-  const deaths    = aidsDeaths.length > 0    ? aidsDeaths    : deathsFallback;
+  const incidence = incidenceRate;
+  const art       = artCoverage.length > 0 ? artCoverage : artFallback;
+  const deaths    = aidsDeaths.length > 0  ? aidsDeaths  : deathsFallback;
 
   const hasUnaids = hasAny(plhiv, newInfections, aidsDeaths, diagnosed, onArt, suppressed);
   const hasFinancing = hasAny(finTotal, finDomesticGov, finInternational);

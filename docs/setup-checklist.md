@@ -50,6 +50,11 @@ Enter these yourself in the GitHub UI. Do not paste them into chat.
 Actions → "Refresh dashboard data" → Run workflow. Takes a while: it runs the
 full pipeline against the WHO/World Bank/IMF APIs before uploading.
 
+The workflow's monthly schedule is disabled — it is manual-trigger only, and it
+always rebuilds from the default branch. To publish pipeline output you already
+have locally, export the four variables above and run
+`dashboard/scripts/publish-data.sh` instead.
+
 Then confirm in a browser that this returns a file, not an error:
 `https://<public-bucket-url>/master.parquet`
 

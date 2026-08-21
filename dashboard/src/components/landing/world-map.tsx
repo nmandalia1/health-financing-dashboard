@@ -37,7 +37,7 @@ interface MapMetric {
 
 const METRICS: MapMetric[] = [
   {
-    code: "GHED_CHEGDP_SHA2011",
+    code: "GHED_che_gdp",
     label: "Health share of GDP",
     fullName: "Current health expenditure (% of GDP)",
     unit: "%",
@@ -54,7 +54,7 @@ const METRICS: MapMetric[] = [
     accent: "text-govt",
   },
   {
-    code: "GHED_CHE_pc_US_SHA2011",
+    code: "GHED_che_pc_usd",
     label: "Health spending per person",
     fullName: "Health spending per capita (USD)",
     unit: " USD",
@@ -71,7 +71,7 @@ const METRICS: MapMetric[] = [
     accent: "text-violet-600",
   },
   {
-    code: "GHED_OOPSCHE_SHA2011",
+    code: "GHED_oops_che",
     label: "Household payments",
     fullName: "Out-of-pocket share of health spending",
     unit: "%",
@@ -87,7 +87,7 @@ const METRICS: MapMetric[] = [
     accent: "text-oop",
   },
   {
-    code: "GHED_GGHE-DGGE_SHA2011",
+    code: "GHED_gghed_gge",
     label: "Government priority",
     fullName: "Government health spending (% of government budget)",
     unit: "%",
@@ -104,7 +104,7 @@ const METRICS: MapMetric[] = [
     accent: "text-emerald-600",
   },
   {
-    code: "WHOSIS_000001",
+    code: "SP.DYN.LE00.IN",
     label: "Life expectancy",
     fullName: "Life expectancy at birth (years)",
     unit: " yrs",

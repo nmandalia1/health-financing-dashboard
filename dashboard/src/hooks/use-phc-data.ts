@@ -14,9 +14,11 @@ const PHC_INDICATORS = [
   "HWF_0004",             // Dentists per 10,000
   "HWF_0006",             // Pharmacists per 10,000
   "SH.MED.BEDS.ZS",       // Hospital beds per 1,000
-  "WHS4_543",             // Skilled birth attendance %
-  "WHS4_100",             // Antenatal care ≥1 visit %
-  "WHS4_544",             // Antenatal care ≥4 visits %
+  // These were WHS4_543 / WHS4_100 / WHS4_544, which GHO publishes as BCG,
+  // DTP3 and IPV immunisation coverage — not maternal care. Correct codes:
+  "MDG_0000000025",            // Skilled birth attendance %
+  "ANC_ATLEAST1VISIT_PERCENT", // Antenatal care ≥1 visit %
+  "WHS4_154",                  // Antenatal care ≥4 visits %
 ];
 
 export function usePhcData(iso3: string) {
