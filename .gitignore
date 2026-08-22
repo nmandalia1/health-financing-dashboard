@@ -42,3 +42,6 @@ dashboard/public/data/
 # launch.json hardcodes this machine's npm location. Neither is useful to a
 # collaborator and both leak local structure in a public repo.
 .claude/
+# Vercel CLI project link (added by `vercel git connect`). Machine-local —
+# it points at the linked project and should not be shared.
+.vercel
