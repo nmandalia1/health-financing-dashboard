@@ -55,8 +55,8 @@ export default function Home() {
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
             Revenue sources, out-of-pocket burden and service coverage across
-            217 countries — then open any country for its fiscal space, budget
-            execution and disease-programme financing.
+            217 countries — then open any country for its full financing
+            profile and fiscal space.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-xs leading-relaxed text-muted-foreground/70">
             Built on published data from the WHO Global Health Expenditure

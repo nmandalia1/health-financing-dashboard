@@ -37,6 +37,27 @@ copy is deliberate:
 | "Total health spending as a share of GDP … a smaller share of national income" | Two imprecisions: the series is *current* health expenditure, which excludes gross capital formation, so it is not total health spending; and GDP is domestic product, not national income (that is GNI). | "Current health expenditure (CHE) as a share of GDP — final consumption of health goods and services, excluding gross capital formation." |
 | "Health spending per person in current US dollars." | Accurate but omits the comparability caveat that matters most: current US$ at market exchange rates is not price-adjusted, so cross-country levels conflate price and volume. | Adds the market-exchange-rate and price-adjustment caveat, and points to the constant-US$ series on the country pages. |
 
+The subhead lists only what nearly every country has. An earlier draft ended
+"…fiscal space, budget execution and disease-programme financing", which
+overstated the third of those and badly overstated the second:
+
+| Claim | Backed by | Countries | Latest |
+| --- | --- | --- | --- |
+| fiscal space | `mart_fiscal_space` | 193 | 2023 |
+| budget execution | PEFA 2016 pillar 3 | **41** | **2019** |
+| disease-programme financing | UNAIDS + WHO JRF | 176 | 2024 |
+
+PEFA is assessment-based rather than a panel — countries are assessed
+episodically and the 2016 framework reset the scoring — so 41 countries is a
+property of the source, not a pipeline gap. "Open **any** country for its budget
+execution" was untrue for four countries in five, so the front page no longer
+claims it. The PFM lens still surfaces it and is honest about its own basis
+(assessment-year histogram, scores forward-carried at most 4 years with
+provenance retained); the landing page was the only place overselling it.
+
+Rule of thumb for this page: do not name a dataset in the hero unless coverage
+is comparable to the financing series (~190 countries, current to last year).
+
 Other landing-page corrections in the same pass:
 
 - **Government priority** said "% of government budget". The series is domestic
