@@ -48,7 +48,7 @@ const METRICS: MapMetric[] = [
     ],
     reverseScale: true,
     description:
-      "Total health spending as a share of GDP. Darker countries spend a smaller share of national income on health.",
+      "Current health expenditure (CHE) as a share of GDP — final consumption of health goods and services, excluding gross capital formation. Darker countries devote a smaller share of GDP to health.",
     routeSuffix: "",
     icon: Activity,
     accent: "text-govt",
@@ -56,7 +56,7 @@ const METRICS: MapMetric[] = [
   {
     code: "GHED_che_pc_usd",
     label: "Health spending per person",
-    fullName: "Health spending per capita (USD)",
+    fullName: "Current health expenditure per capita (current US$)",
     unit: " USD",
     colorscale: [
       [0, "#f5f3ff"],
@@ -65,7 +65,7 @@ const METRICS: MapMetric[] = [
     ],
     reverseScale: true,
     description:
-      "Health spending per person in current US dollars. Darker countries have lower spending per person.",
+      "Current health expenditure per capita, converted at market exchange rates and not price-adjusted — cross-country levels reflect price differences as well as real volume. A constant-US$ series is on each country page. Darker countries spend less per person.",
     routeSuffix: "",
     icon: Coins,
     accent: "text-violet-600",
@@ -73,7 +73,7 @@ const METRICS: MapMetric[] = [
   {
     code: "GHED_oops_che",
     label: "Household payments",
-    fullName: "Out-of-pocket share of health spending",
+    fullName: "Out-of-pocket expenditure (% of current health expenditure)",
     unit: "%",
     colorscale: [
       [0, "#fef3c7"],
@@ -81,7 +81,7 @@ const METRICS: MapMetric[] = [
       [1, "#7c2d12"],
     ],
     description:
-      "Share of health spending paid directly by households. The 20% line is a financial-protection watch point, not a guarantee of safety.",
+      "Out-of-pocket payments (OOPS) as a share of current health expenditure. Above roughly 20% is associated with a rising incidence of catastrophic health spending; it is a watch line, not a threshold below which households are safe.",
     routeSuffix: "/protection",
     icon: HandCoins,
     accent: "text-oop",
@@ -89,7 +89,7 @@ const METRICS: MapMetric[] = [
   {
     code: "GHED_gghed_gge",
     label: "Government priority",
-    fullName: "Government health spending (% of government budget)",
+    fullName: "Domestic government health expenditure (% of general government expenditure)",
     unit: "%",
     colorscale: [
       [0, "#ecfdf5"],
@@ -98,7 +98,7 @@ const METRICS: MapMetric[] = [
     ],
     reverseScale: true,
     description:
-      "Share of the government budget allocated to health. The Abuja 15% target applies to African Union members; elsewhere it is a useful reference point.",
+      "Domestic general government health expenditure (GGHE-D) as a share of general government expenditure (GGE) — the priority health receives in executed public spending, excluding external funds. The Abuja Declaration's 15% commitment binds African Union members; elsewhere it is a reference point, not a standard.",
     routeSuffix: "/fiscal",
     icon: Landmark,
     accent: "text-emerald-600",
@@ -115,7 +115,7 @@ const METRICS: MapMetric[] = [
     ],
     reverseScale: true,
     description:
-      "Life expectancy at birth, both sexes combined. Darker = shorter lives.",
+      "Life expectancy at birth, both sexes combined. A summary population-health outcome shown for context — it responds to far more than health financing. Darker countries have lower life expectancy.",
     routeSuffix: "/outcomes",
     icon: HeartPulse,
     accent: "text-rose-600",
@@ -132,7 +132,7 @@ const METRICS: MapMetric[] = [
     ],
     reverseScale: true,
     description:
-      "WHO/World Bank index of essential health service coverage. Darker = weaker coverage. A score of 80 is commonly used as a high-coverage reference point; SDG 3.8 calls for universal health coverage.",
+      "SDG indicator 3.8.1 — the WHO/World Bank index of essential service coverage, the geometric mean of 14 tracer indicators across reproductive and child health, infectious disease, noncommunicable disease and system capacity. 80 is WHO's interim high-coverage reference, not the SDG target; SDG 3.8 calls for universal coverage. Darker countries have weaker coverage.",
     routeSuffix: "/outcomes",
     icon: ShieldCheck,
     accent: "text-external",

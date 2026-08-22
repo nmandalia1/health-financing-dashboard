@@ -25,6 +25,40 @@ Reviewed as a health financing / PFM content audit with a global health communic
 | `DataCoverage` | "complete data for all series" | "data for every series shown" | Easier to understand at a glance. |
 | `NoData` hints | "not routinely reported" | "not reported in the source data used here" | Avoids implying the country does not collect the data. |
 
+## Landing page — revised to expert register
+
+The hero and the six landing-map descriptions were rewritten to read correctly
+to a health financing specialist. Two calls in the "Landing Map" table below
+were **reversed** in the process; they are kept for the record, but the current
+copy is deliberate:
+
+| Superseded suggestion | Why it was changed | Now reads |
+| --- | --- | --- |
+| "Total health spending as a share of GDP … a smaller share of national income" | Two imprecisions: the series is *current* health expenditure, which excludes gross capital formation, so it is not total health spending; and GDP is domestic product, not national income (that is GNI). | "Current health expenditure (CHE) as a share of GDP — final consumption of health goods and services, excluding gross capital formation." |
+| "Health spending per person in current US dollars." | Accurate but omits the comparability caveat that matters most: current US$ at market exchange rates is not price-adjusted, so cross-country levels conflate price and volume. | Adds the market-exchange-rate and price-adjustment caveat, and points to the constant-US$ series on the country pages. |
+
+Other landing-page corrections in the same pass:
+
+- **Government priority** said "% of government budget". The series is domestic
+  general government health expenditure (GGHE-D) over general government
+  expenditure (GGE) — executed spending, not appropriation, and excluding
+  external funds channelled through government.
+- **Out-of-pocket** now names the denominator (current health expenditure) and
+  states the actual empirical claim behind the 20% line: association with a
+  rising incidence of catastrophic health spending.
+- **UHC Service Coverage Index** now names SDG indicator 3.8.1 and describes the
+  construction (geometric mean of 14 tracer indicators). The audit's guidance on
+  not presenting 80 as an SDG target is retained.
+- **Life expectancy** is flagged as a population-health outcome shown for
+  context, so it is not read as a financing measure.
+- The hero headline no longer says "what it buys": it asserted a
+  spending-to-outcomes link the data does not support, and collided with
+  "purchasing" as a term of art.
+
+The register here is deliberately expert-first — technical vocabulary is used
+unglossed. That is a scoping decision for the landing page specifically; the
+in-app tooltip guidance below still applies elsewhere.
+
 ## Landing Map
 
 | Location | Current text | Suggested revision | Rationale |
